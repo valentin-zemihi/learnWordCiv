@@ -152,15 +152,15 @@ function startGame(playSelect) {
 			stateGame = "cash" ;
 		break ;
 		case "level1" :
-			langGame = "anglais" ;
+			langGame = "english" ;
 			stateGame = 2 ;
 		break ;
 		case "level2" :
-			langGame = "anglais" ;
+			langGame = "english" ;
 			stateGame = 4 ;
 		break ;
 		case "level3" :
-			langGame = "anglais"
+			langGame = "english"
 			stateGame = "cash" ;
 		break ;
 	}
@@ -224,7 +224,7 @@ function writeQuestion(idWordAsked) {
 			tempText = "Question "+(questionDisplay+1)+" : Quelle est la traduction française de « "+listWord[idWordAsked][0]+" » ?" ;
 		break ;
 		case "english" :
-			tempText = "Question "+(questionDisplay+1)+" : What is the English translation of « "+listWord[idWordAsked][0]+" » ?" ;
+			tempText = "Question "+(questionDisplay+1)+" : What is the English translation of « "+listWord[idWordAsked][1]+" » ?" ;
 		break ;
 	}
 	document.getElementById("askRow").innerHTML = tempText ;
@@ -250,7 +250,7 @@ function writeAnswerButton(isResult) {
 				labelButton = listWord[listAsk[questionDisplay][i]][1];
 			break ;
 			case "english" :
-				labelButton = listWord[listAsk[questionDisplay][i]][2];
+				labelButton = listWord[listAsk[questionDisplay][i]][0];
 			break ;
 		}
 		if(isResult)
@@ -266,6 +266,8 @@ function writeAnswerButton(isResult) {
 function writeAnswerZone() {
 	var element ; //Reçoit l'élément à ajouter dans la page web
 	var tempText ; //Reçoit le texte de l'élément
+
+	document.getElementById("answerRow").className = "row row75" ;
 
 	element = document.createElement("div") ;
 	element.id = "answerTxtRow" ;
@@ -292,8 +294,8 @@ function writeAnswerZone() {
 
 	element = document.createElement("div") ;
 	element.id = "infoTextAnswer" ;
-	element.className = "row" ;
-	tempText = document.createTextNode("Faites bien attention à l'orthographe et la première lettre doit être en majuscule.") ;
+	element.className = "row txtInfo" ;
+	tempText = document.createTextNode("*Faites bien attention à l'orthographe et la première lettre doit être en majuscule.") ;
 	element.appendChild(tempText) ;
 	document.getElementById("answerRow").appendChild(element) ;
 }
@@ -345,7 +347,7 @@ function testTextAnswer() {
 
 	element = document.createElement("div") ;
 	element.id = "titleResultRow" ;
-	element.className = "row" ;
+	element.className = "row txtCenter" ;
 
 	if (playerAnswer==goodAnswer){
 		score += 1 ;
@@ -372,8 +374,10 @@ function displayAnswer() {
 
 	/*---Redessine les boutons---*/
 	document.getElementById("answerRow").innerHTML = "" ;
+
 	if (stateGame == "cash"){
 		tempText = document.createTextNode("Votre réponse est « "+listAsk[questionDisplay][5]+" ».") ;
+		document.getElementById("answerRow").className = "row row75 txtCenter" ;
 		document.getElementById("answerRow").appendChild(tempText) ;
 	}
 	else{writeAnswerButton(true) ;}
@@ -395,7 +399,11 @@ function displayListWord() {
 	/*---Fonction---*/
 	cleanHTML() ;
 
-	putButton("mainDiv", "Back", "Retour", null) ;
+	element = document.createElement("div") ;
+	element.id = "backRow" ;
+	element.className = "row row10" ;
+	document.getElementById("mainDiv").appendChild(element) ;
+	putButton("backRow", "Back", "Retour", null) ;
 
 	for (var i = 0; i < listWord.length; i++) {
 		element = document.createElement("div") ;
